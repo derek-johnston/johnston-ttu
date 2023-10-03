@@ -17,3 +17,5 @@ classifiers = [
 	"Operating System :: OS Independent"
 ]
 
+[project.urls]
+"Homepage" = "https://github.com/pypa/sampleproject/"
