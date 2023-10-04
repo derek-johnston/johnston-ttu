@@ -49,7 +49,7 @@ def process_ena_data(directory):
 		df["Magnitude"] = np.abs(df["Complex"].to_numpy())
 		df["Phase"] 		= np.unwrap(np.angle(df["Complex"].to_numpy()))
 		# Add the new processed file
-		df.to_csv(f"{directory}\{file}_p.csv")
+		df.to_csv(f"{directory}_p\{file}.csv")
 		# Remove the temporary data file.
 		remove(f"{directory}\{file}_t.csv")
 	
