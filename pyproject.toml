@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "johnston_ttu"
-version = "0.0.1"
+version = "0.1.0"
 authors = [
 	{name="Derek Johnston", email="derek.a.johnston@ttu.edu"}
 ]
@@ -15,6 +15,10 @@ classifiers = [
 	"Programming Language :: Python :: 3",
 	"License :: OSI Approced :: MIT License",
 	"Operating System :: OS Independent"
+]
+dependencies = [
+	"numpy",
+	"pandas"
 ]
 
 [project.urls]
