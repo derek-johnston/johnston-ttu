@@ -46,9 +46,10 @@ def process_ena_data(directory):
 		# Get the complex number for each frequency component.
 		df["Complex"] = [complex(df["Real"][idx], df["Imag"][idx]) for idx in df.index]
 		# Get the magnitude and phase for each row of the dataframe.
-		df["Magnitude"] = [np.abs(df["Complex"][idx]) for idx in df.index]
-		df["Phase"] 		= [np.angle(df["Complex"][idx]) for idx in df.index]
-		print(df.head())
+		df["Magnitude"] = np.abs(df["Complex"].to_numpy())
+		df["Phase"] 		= np.unwrap(np.angle(df["Complex"].to_numpy()))
+		# Add the new processed file
+		df.to_csv(f"{directory}\{file}_p.csv")
 		# Remove the temporary data file.
 		remove(f"{directory}\{file}_t.csv")
 	
