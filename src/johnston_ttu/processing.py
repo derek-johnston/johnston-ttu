@@ -38,6 +38,7 @@ def process_ena_data(directory):
 	for file in directories:
 		# Remove the .csv tag from the end of the file.
 		file = file.replace(".csv", "")
+		file = file.replace(".CSV", "")
 		# Remove the ENA metadata lines.
 		remove_ena_labels(f"{directory}\{file}")
 		# Read-in the temporary file as a pandas dataframe.
