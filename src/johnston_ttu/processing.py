@@ -54,5 +54,32 @@ def process_ena_data(directory):
 		# Remove the temporary data file.
 		remove(f"{directory}\{file}_t.csv")
 	
-if __name__ == "__main__":
-	process_ena_data("data")
+def compile_ena_data(data):
+	"""
+	For a given data directory, compile the magnitude and phase 
+	data for each sample into separate directories.
+
+	Keyword Arguments
+	data -- The directory containing the dataset.
+
+	Returns
+	magnitudes -- A DataFrame containing the magnitude measurements.
+	phases -- A DataFrame containing the phase measurements.
+	"""
+	# Store the magnitudes and phases of each sample in a dataframe.
+	magnitudes 	= pd.DataFrame()
+	phases			= pd.DataFrame()
+	# Iterate through each data file in the processed data directory.
+	isFirst = True
+	for filename in listdir("data_p"):
+		df = pd.read_csv(f"data_p\{filename}")
+		if isFirst:
+			""" The first time through, get the frequency data."""
+			magnitudes["Frequency"] = df["Frequency"]
+			phases["Frequency"] = df["Frequency"]
+			isFirst = False
+
+		magnitudes[filename.replace(".csv", "")] = df["Magnitude"]
+		phases[filename.replace(".csv", "")] 		= df["Phase"]
+
+	return magnitudes, phases
