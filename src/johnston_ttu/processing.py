@@ -83,3 +83,59 @@ def compile_ena_data(data):
 		phases[filename.replace(".csv", "")] 		= df["Phase"]
 
 	return magnitudes, phases
+
+def snr_analysis(data):
+	"""
+	For a given data directory, perform the SNR analysis and store
+	the results in a .csv file.
+	"""
+	# Compile the dataset
+	magnitudes, phases = compile_ena_data("data_p")
+	## Calculate the mean, stdev, snr, and cv
+	# Magnitudes
+	magnitudes["Mean"] 	= magnitudes.drop("Frequency", axis=1).mean(axis=1)
+	magnitudes["STD"]		= magnitudes.drop("Frequency", axis=1).std(axis=1)
+	magnitudes["SNR"]		= 20 * np.log(np.abs(magnitudes["Mean"] / magnitudes["STD"]))
+	magnitudes["CV"]		= 100 * magnitudes["STD"] / magnitudes["Mean"]
+
+	phases["Mean"]	= phases.drop("Frequency", axis=1).mean(axis=1)
+	phases["STD"]		= phases.drop("Frequency", axis=1).std(axis=1)
+	phases["SNR"]		= 20 * np.log(np.abs(phases["Mean"] / phases["STD"]))
+	phases["CV"]		= 100 * phases["STD"] / phases["Mean"]
+
+	# Compute the summary statistics about the SNR and CV
+	print(100*"=")
+	print("SUMMARY STATISTICS: Signal to Noise Analysis")
+	print(100*"=")
+	print("Magnitudes:")
+	print(f"Mean SNR = {np.round(np.mean(magnitudes['SNR']), 1)} dB")
+	print(f"Standard Deviation = {np.round(np.std(magnitudes['SNR']), 1)} dB")
+	print(f"Maximum SNR = {np.round(np.max(magnitudes['SNR']), 1)} dB at {int(magnitudes['Frequency'][np.argmax(magnitudes['SNR'])])} Hz")
+	print(f"Minimum SNR = {np.round(np.min(magnitudes['SNR']), 1)} dB at {int(magnitudes['Frequency'][np.argmin(magnitudes['SNR'])])} Hz")
+	print("")
+	print("Phases:")
+	print(f"Mean SNR = {np.round(np.mean(phases['SNR']), 1)} dB")
+	print(f"Standard Deviation = {np.round(np.std(phases['SNR']), 1)} dB")
+	print(f"Maximum SNR = {np.round(np.max(phases['SNR']), 1)} dB at {int(phases['Frequency'][np.argmax(phases['SNR'])])} Hz")
+	print(f"Minimum SNR = {np.round(np.min(phases['SNR']), 1)} dB at {int(phases['Frequency'][np.argmin(phases['SNR'])])} Hz")
+	print("")
+	print(100*"=")
+	print("SUMMARY STATISTICS: Coefficient of Variance")
+	print(100*"=")
+	print("Magnitudes:")
+	print(f"Mean CV = {np.round(np.mean(magnitudes['CV']), 1)} dB")
+	print(f"Standard Deviation = {np.round(np.std(magnitudes['CV']), 1)} dB")
+	print(f"Maximum CV = {np.round(np.max(magnitudes['CV']), 1)} dB at {int(magnitudes['Frequency'][np.argmax(magnitudes['CV'])])} Hz")
+	print(f"Minimum CV = {np.round(np.min(magnitudes['CV']), 1)} dB at {int(magnitudes['Frequency'][np.argmin(magnitudes['CV'])])} Hz")
+	print("")
+	print("Phases:")
+	print(f"Mean CV = {np.round(np.mean(phases['CV']), 1)} dB")
+	print(f"Standard Deviation = {np.round(np.std(phases['CV']), 1)} dB")
+	print(f"Maximum CV = {np.round(np.max(phases['CV']), 1)} dB at {int(phases['Frequency'][np.argmax(phases['CV'])])} Hz")
+	print(f"Minimum CV = {np.round(np.min(phases['CV']), 1)} dB at {int(phases['Frequency'][np.argmin(phases['CV'])])} Hz")
+	print("")
+	print(100*"=")
+
+	# Save the magnitude and phase dataframes
+	magnitudes.to_csv("magnitudes.csv")
+	phases.to_csv("phases.csv")
