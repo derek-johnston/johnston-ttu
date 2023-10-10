@@ -139,3 +139,14 @@ def snr_analysis(data):
 	# Save the magnitude and phase dataframes
 	magnitudes.to_csv("magnitudes.csv")
 	phases.to_csv("phases.csv")
+
+def compile_and_save(data="data_p"):
+	"""
+	Compile the magnitude and phase data from multiple samples
+	
+	Keyword Arguments
+	data -- The director containing the datasets.
+	"""
+	magnitudes, phases = compile_ena_data(data)
+	magnitudes.to_csv("magnitudes.csv")
+	phases.to_csv("phases.csv")
