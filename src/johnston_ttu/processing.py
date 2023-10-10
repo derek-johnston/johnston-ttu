@@ -148,5 +148,7 @@ def compile_and_save(data="data_p"):
 	data -- The director containing the datasets.
 	"""
 	magnitudes, phases = compile_ena_data(data)
+	magnitude.set_index("Frequency")
+	phases.set_index("Frequency")
 	magnitudes.to_csv("magnitudes.csv")
 	phases.to_csv("phases.csv")
