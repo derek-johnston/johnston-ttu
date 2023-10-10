@@ -1,5 +1,4 @@
 from os import listdir
-from helpers import get_N_elements
 import numpy 							as np
 import pandas 						as pd
 import matplotlib.pyplot 	as plt
@@ -9,6 +8,11 @@ Developed By: Derek Johnston @ Texas Tech University
 
 Functions for generating common figures from experiments.
 """
+def get_N_elements(values, N=6):
+	"""for a given list, get N evenly spaced elements"""
+	idx = np.round(np.linspace(0, len(values) - 1, 6)).astype(int)
+	return values[idx]
+	
 def snr_magnitude():
 	"""Generate a magnitude plot for a sample with SNR overlay."""
 	# Read-in the results data
