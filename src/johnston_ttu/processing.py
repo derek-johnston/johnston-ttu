@@ -137,8 +137,8 @@ def snr_analysis(data):
 	print(100*"=")
 
 	# Save the magnitude and phase dataframes
-	magnitudes.to_csv("magnitudes.csv")
-	phases.to_csv("phases.csv")
+	magnitudes.to_csv("magnitudes.csv", index=False)
+	phases.to_csv("phases.csv", index=False)
 
 def compile_and_save(data="data_p"):
 	"""
@@ -148,7 +148,5 @@ def compile_and_save(data="data_p"):
 	data -- The director containing the datasets.
 	"""
 	magnitudes, phases = compile_ena_data(data)
-	magnitudes.set_index("Frequency")
-	phases.set_index("Frequency")
-	magnitudes.to_csv("magnitudes.csv")
-	phases.to_csv("phases.csv")
+	magnitudes.to_csv("magnitudes.csv", index=False)
+	phases.to_csv("phases.csv", index=False)
